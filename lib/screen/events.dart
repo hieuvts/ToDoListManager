@@ -15,26 +15,32 @@ class _EventScreenState extends State<EventScreen> {
           return Row(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                            color: Color(0x20000000),
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                  ]
-                ),
-                child: Icon(_eventList[index].isFinished 
-                    ? Icons.radio_button_checked
-                    : Icons.radio_button_unchecked,
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    color: Color(0x20000000),
+                    blurRadius: 10,
+                    offset: Offset(2, 2),
+                  ),
+                ]),
+                child: Icon(
+                  _eventList[index].isFinished
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
                   size: 20,
                   color: Theme.of(context).accentColor,
                 ),
               ),
-              Container(width: 80, child: Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Text(_eventList[index].time, style: TextStyle(fontSize: 17,),),
-              )),
+              Container(
+                  width: 80,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text(
+                      _eventList[index].time,
+                      style: TextStyle(
+                        fontSize: 17,
+                      ),
+                    ),
+                  )),
               //Cho vao Expanded de box bao quanh content rong qua
               Expanded(
                 //Tao khoang cach quanh box
@@ -81,14 +87,15 @@ class _EventScreenState extends State<EventScreen> {
         });
   }
 }
-class Event{
+
+class Event {
   final String time;
   final String task;
   final String desc;
   final bool isFinished;
   const Event(this.time, this.task, this.desc, this.isFinished);
-
 }
+
 final List<Event> _eventList = [
   new Event("8:00", "Go out", "Meet friends", true),
   new Event("9:00", "Go back home", "Cooking", true),

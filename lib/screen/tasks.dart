@@ -4,7 +4,8 @@ class TaskScreen extends StatefulWidget {
   @override
   _TaskScreenState createState() => _TaskScreenState();
 }
-class Task{
+
+class Task {
   //Khai bao final de dung Const Constructor
   final String taskName;
   final bool isFinished;
@@ -12,59 +13,91 @@ class Task{
 }
 
 final List<Task> _taskList = [
-  new Task("Wake up early", false), 
+  new Task("Wake up early", false),
   new Task("Take breakfast", false),
   new Task("Go to schollllsadasdadas", false),
   new Task("Do something!", false),
-  
   new Task("Go swimming", true),
   new Task("Play game", true),
   new Task("Go Go GOOO", true),
 ];
+
 class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(0),
       itemCount: _taskList.length,
-      itemBuilder: (context, index){
-        return _taskList[index].isFinished 
-        ? _taskCompletedList(_taskList[index].taskName) 
-        : _taskUncompletedList(_taskList[index].taskName);
+      itemBuilder: (context, index) {
+        return _taskList[index].isFinished
+            ? _taskCompletedList(_taskList[index].taskName)
+            : _taskUncompletedList(_taskList[index].taskName);
       },
     );
   }
 
   Widget _taskUncompletedList(String task) {
     return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: <Widget>[
-              Icon(Icons.radio_button_unchecked,
-                    color: Theme.of(context).accentColor,
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: Color(0x20000000),
+                  blurRadius: 10,
+                  offset: Offset(1, 1),
+                ),
+              ]),
+              child: Icon(
+                Icons.radio_button_unchecked,
+                color: Theme.of(context).accentColor,
               ),
-              SizedBox(width: 10,),
-              Text(task,
-              style: TextStyle(fontSize: 15, fontFamily: "helveticaneue", ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              task,
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: "helveticaneue",
               ),
-            ],
-          )
-    );
+            ),
+          ],
+        ));
   }
+
   Widget _taskCompletedList(String task) {
     return Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: <Widget>[
-              Icon(Icons.radio_button_checked,
-                    color: Theme.of(context).accentColor,
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(80, 245, 91, 91),
+                  blurRadius: 10,
+                  offset: Offset(1, 1),
+                ),
+              ]),
+              child: Icon(
+                Icons.radio_button_checked,
+                color: Theme.of(context).accentColor,
               ),
-              SizedBox(width: 10,),
-              Text(task,
-              style: TextStyle(fontSize: 15, fontFamily: "helveticaneue", fontStyle: FontStyle.italic,),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              task,
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: "helveticaneue",
+                fontStyle: FontStyle.italic,
               ),
-            ],
-          )
-    );
+            ),
+          ],
+        ));
   }
 }

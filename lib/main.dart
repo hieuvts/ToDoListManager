@@ -53,8 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
               //Khoang cach tu mep phai den Text
               right: 10,
               child: Text(
-                "6",
-                style: TextStyle(fontSize: 200, color: Color(0x10000000)),
+                "25",
+                style: TextStyle(fontSize: 100, color: Color(0x10000000)),
               ),
             ),
           ],
@@ -100,12 +100,12 @@ class _MyHomePageState extends State<MyHomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(
-          height: 70,
+          height: 35,
         ),
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(20.0),
           child: Text(
-            "Monday",
+            "Wedesday",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
@@ -117,6 +117,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: _button(context),
+        ),
+        //Tao duong phan chia Button va ListView
+        SizedBox(
+          height: 10,
+        ),
+        Divider(
+          thickness: 2,
         ),
         Expanded(
           //Tao 1 pageview vuot trai/phai de chuyen Screen
@@ -145,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _currentPage == 0 ? Colors.white : Theme.of(context).accentColor,
           buttonColor:
               _currentPage == 0 ? Theme.of(context).accentColor : Colors.white,
-          buttonText: "Task",
+          buttonText: "Tasks",
         )),
         SizedBox(
           width: 40,
@@ -153,10 +160,10 @@ class _MyHomePageState extends State<MyHomePage> {
         Expanded(
           child: CustomButton(
             onPressed: () {
-            _pageController.nextPage(
-              duration: Duration(milliseconds: 450),
-              curve: Curves.easeInOut,
-            );
+              _pageController.nextPage(
+                duration: Duration(milliseconds: 450),
+                curve: Curves.easeInOut,
+              );
             },
             textColor: _currentPage == 0
                 ? Theme.of(context).accentColor
