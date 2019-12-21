@@ -28,43 +28,49 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  PageController _pageController = PageController();
+  //Do _pageController.page tra ve kieu double
+  //Mac dinh luc chay app se hien thi TaskPage <=> 0
+  double _currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page;
+      });
+    });
     return Scaffold(
         body: Stack(
           children: <Widget>[
-                  _mainContent(context), 
-                  Container(
-                    height: 25, 
-                    color: Theme.of(context).accentColor,
-                    //child: Text("To do list"),
-                    ),
-                  Positioned(
-                    //Khoang cach tu mep phai den Text
-                    right: 10,
-                    child: Text(
-                    "6",
-                    style: TextStyle(fontSize:200, color: Color(0x10000000)),
-                    ),
-                  ),
-                ],
+            _mainContent(context),
+            Container(
+              height: 25,
+              color: Theme.of(context).accentColor,
+              //child: Text("To do list"),
+            ),
+            Positioned(
+              //Khoang cach tu mep phai den Text
+              right: 10,
+              child: Text(
+                "6",
+                style: TextStyle(fontSize: 200, color: Color(0x10000000)),
+              ),
+            ),
+          ],
         ),
-
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showDialog(
-              //Chi duoc dung nut BACK de thoat Dialog
-              barrierDismissible: false,
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  child: AddTask(),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                    )
-                    );
-              }
-            );
+                //Chi duoc dung nut BACK de thoat Dialog
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                      child: _currentPage == 0 ? AddTask() : AddEvent(),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10))));
+                });
           },
           child: Icon(Icons.add),
         ),
@@ -91,56 +97,77 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Column _mainContent(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(
-            height: 70,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              "Monday",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, fontFamily: "PatrickHand",),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: 70,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            "Monday",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 32,
+              fontFamily: "PatrickHand",
             ),
           ),
-          //Nut Task
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: _button(context),
+        ),
+        //Nut Task
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: _button(context),
+        ),
+        Expanded(
+          //Tao 1 pageview vuot trai/phai de chuyen Screen
+          child: PageView(
+            controller: _pageController,
+            children: <Widget>[TaskScreen(), EventScreen()],
           ),
-          Expanded(
-            //Tao 1 pageview vuot trai/phai de chuyen Screen
-            child: PageView(children: <Widget>[TaskScreen(), EventScreen()],),
-          )
-        ],
-      );
+        )
+      ],
+    );
   }
 
-  
   Widget _button(BuildContext context) {
     return Row(
       children: <Widget>[
         Expanded(
-          child: CustomButton(
-            onPressed: (){},
-            textColor: Colors.white, 
-            buttonColor: Theme.of(context).accentColor,
-            buttonText: "Task", )
-        ),
+            child: CustomButton(
+          onPressed: () {
+            _pageController.previousPage(
+              duration: Duration(milliseconds: 450),
+              curve: Curves.easeInOut,
+            );
+          },
+          //Neu page hien tai la TaskPage (0) thi button mau do, chu mau trang
+          textColor:
+              _currentPage == 0 ? Colors.white : Theme.of(context).accentColor,
+          buttonColor:
+              _currentPage == 0 ? Theme.of(context).accentColor : Colors.white,
+          buttonText: "Task",
+        )),
         SizedBox(
           width: 40,
         ),
         Expanded(
           child: CustomButton(
-            onPressed: (){},
-            textColor: Theme.of(context).accentColor, 
-            buttonColor:  Colors.white,
+            onPressed: () {
+            _pageController.nextPage(
+              duration: Duration(milliseconds: 450),
+              curve: Curves.easeInOut,
+            );
+            },
+            textColor: _currentPage == 0
+                ? Theme.of(context).accentColor
+                : Colors.white,
+            buttonColor: _currentPage == 0
+                ? Colors.white
+                : Theme.of(context).accentColor,
             buttonText: "Events",
-        ),
+          ),
         ),
       ],
     );
   }
-
-  
 }
