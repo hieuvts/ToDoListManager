@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               context: context,
               builder: (BuildContext context) {
                 return Dialog(
-                  child: AddEvent(),
+                  child: AddTask(),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))
                     )
@@ -109,8 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: _button(context),
           ),
           Expanded(
-            //child: TaskScreen(),
-            child: EventScene(),
+            //Tao 1 pageview vuot trai/phai de chuyen Screen
+            child: PageView(children: <Widget>[TaskScreen(), EventScreen()],),
           )
         ],
       );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class EventScene extends StatefulWidget {
+class EventScreen extends StatefulWidget {
   @override
-  _EventSceneState createState() => _EventSceneState();
+  _EventScreenState createState() => _EventScreenState();
 }
 
-class _EventSceneState extends State<EventScene> {
+class _EventScreenState extends State<EventScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
