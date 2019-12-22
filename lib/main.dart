@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todolistapp/custom_button.dart';
 import 'package:todolistapp/screen/add_event.dart';
 import 'package:todolistapp/screen/add_task.dart';
 import 'package:todolistapp/screen/events.dart';
 import 'package:todolistapp/screen/tasks.dart';
+
+import 'blocs/theme_change.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,12 +14,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return ChangeNotifierProvider<ThemeChanger>(
+      builder: (_) => ThemeChanger(ThemeData(
+        primarySwatch: Colors.red,
+      )),
+      child: new MainApp_ThemeData_Changer(),
+    );
+  }
+}
+
+class MainApp_ThemeData_Changer extends StatelessWidget {
+  const MainApp_ThemeData_Changer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Provider.of<ThemeChanger>(context);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        fontFamily: "OpenSansCondensed-Bold",
-      ),
+      theme: theme.getTheme(),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.red,
+      //   fontFamily: "OpenSansCondensed-Bold",
+      // ),
       home: MyHomePage(),
     );
   }
@@ -73,6 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
           },
           child: Icon(Icons.add),
+          tooltip: "Add",
+          backgroundColor: Colors.red[600],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
@@ -105,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Text(
-            "Wedesday",
+            "Wednesday",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
@@ -143,15 +166,13 @@ class _MyHomePageState extends State<MyHomePage> {
             child: CustomButton(
           onPressed: () {
             _pageController.previousPage(
-              duration: Duration(milliseconds: 450),
+              duration: Duration(milliseconds: 400),
               curve: Curves.easeInOut,
             );
           },
           //Neu page hien tai la TaskPage (0) thi button mau do, chu mau trang
-          textColor:
-              _currentPage == 0 ? Colors.white : Theme.of(context).accentColor,
-          buttonColor:
-              _currentPage == 0 ? Theme.of(context).accentColor : Colors.white,
+          textColor: _currentPage == 0 ? Colors.white : Colors.red,
+          buttonColor: _currentPage == 0 ? Colors.red : Colors.white,
           buttonText: "Tasks",
         )),
         SizedBox(
@@ -161,16 +182,12 @@ class _MyHomePageState extends State<MyHomePage> {
           child: CustomButton(
             onPressed: () {
               _pageController.nextPage(
-                duration: Duration(milliseconds: 450),
+                duration: Duration(milliseconds: 400),
                 curve: Curves.easeInOut,
               );
             },
-            textColor: _currentPage == 0
-                ? Theme.of(context).accentColor
-                : Colors.white,
-            buttonColor: _currentPage == 0
-                ? Colors.white
-                : Theme.of(context).accentColor,
+            textColor: _currentPage == 0 ? Colors.red : Colors.white,
+            buttonColor: _currentPage == 0 ? Colors.white : Colors.red,
             buttonText: "Events",
           ),
         ),

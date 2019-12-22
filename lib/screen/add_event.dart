@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:todolistapp/custom_action_button.dart';
 import 'package:todolistapp/custom_datetime_picker.dart';
 import 'package:todolistapp/custom_textfield.dart';
@@ -11,8 +12,8 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
-  String pickedDate = 'Pick a date';
-  String pickedTime = 'Pick a time';
+  DateTime pickedDate = new DateTime.now();
+  String pickedTime = new TimeOfDay.now().toString();
 
   Future _pickDate() async {
     DateTime datepicker = await showDatePicker(
@@ -22,7 +23,7 @@ class _AddEventState extends State<AddEvent> {
         lastDate: new DateTime.now().add(Duration(days: 365)));
     if (datepicker != null)
       setState(() {
-        pickedDate = datepicker.toString();
+        pickedDate = datepicker;
       });
   }
 
@@ -61,9 +62,17 @@ class _AddEventState extends State<AddEvent> {
           SizedBox(
             height: 10,
           ),
-          CustomDatetimePicker(onPressed: _pickDate, icon: Icons.date_range, str: pickedDate,),
+          CustomDatetimePicker(
+            onPressed: _pickDate,
+            icon: Icons.date_range,
+            str: new DateFormat("dd-MM-yyyy").format(pickedDate),
+          ),
           //_dateTimePicker(Icons.date_range, _pickDate, pickedDate),
-          CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
+          CustomDatetimePicker(
+            onPressed: _pickTime,
+            icon: Icons.access_time,
+            str: pickedTime,
+          ),
           //_dateTimePicker(Icons.access_time, _pickTime, pickedTime),
           CustomActionButton(
             onClose: () {
