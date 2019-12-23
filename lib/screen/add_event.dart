@@ -15,7 +15,7 @@ class AddEvent extends StatefulWidget {
 
 class _AddEventState extends State<AddEvent> {
   DateTime pickedDate = new DateTime.now();
-  String pickedTime = new TimeOfDay.now().toString();
+  TimeOfDay pickedTime = new TimeOfDay.now();
 
   final _enteredTitle = TextEditingController();
   final _enteredDescription = TextEditingController();
@@ -39,7 +39,7 @@ class _AddEventState extends State<AddEvent> {
     );
     if (timepicker != null)
       setState(() {
-        pickedTime = timepicker.toString();
+        pickedTime = timepicker;
       });
   }
 
@@ -58,6 +58,14 @@ class _AddEventState extends State<AddEvent> {
                   style: TextStyle(
                     fontSize: 32,
                   ))),
+          CustomDatetimePicker(
+            onPressed: _pickDate,
+            icon: Icons.date_range,
+            str: new DateFormat("dd-MM-yyyy").format(pickedDate),
+          ),
+          SizedBox(
+            height: 30,
+          ),
           CustomTextfield(
             text: "Enter event title!",
             controller: _enteredTitle,
@@ -72,18 +80,12 @@ class _AddEventState extends State<AddEvent> {
           SizedBox(
             height: 10,
           ),
-          CustomDatetimePicker(
-            onPressed: _pickDate,
-            icon: Icons.date_range,
-            str: new DateFormat("dd-MM-yyyy").format(pickedDate),
-          ),
-          //_dateTimePicker(Icons.date_range, _pickDate, pickedDate),
-          CustomDatetimePicker(
-            onPressed: _pickTime,
-            icon: Icons.access_time,
-            str: pickedTime,
-          ),
-          //_dateTimePicker(Icons.access_time, _pickTime, pickedTime),
+
+          // CustomDatetimePicker(
+          //   onPressed: _pickTime,
+          //   icon: Icons.access_time,
+          //   str: TimeOfDay.now().toString(),
+          // ),
           CustomActionButton(
             onClose: () {
               Navigator.of(context).pop();

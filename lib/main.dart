@@ -17,21 +17,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<Database>(create: (_) => Database()),
-      ],
-      child: MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        fontFamily: "OpenSansCondensed-Bold",
-      ),
-      home: MyHomePage(),
-    )
-    );
+        providers: [
+          ChangeNotifierProvider<Database>(create: (_) => Database()),
+        ],
+        child: MaterialApp(
+          title: 'Tasks and Events manager',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            fontFamily: "OpenSansCondensed-Bold",
+          ),
+          home: MyHomePage(),
+        ));
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -52,20 +50,25 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
     return Scaffold(
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(30.0), //Chieu cao cua AppBar
+            child: AppBar(
+              title: new Text("Tasks and Events manager"),
+            )),
         body: Stack(
           children: <Widget>[
             _mainContent(context),
-            Container(
-              height: 25,
-              color: Theme.of(context).accentColor,
-              //child: Text("To do list"),
-            ),
+            // Container(
+            //   height: 25,
+            //   color: Theme.of(context).accentColor,
+            //   //child: Text("To do list"),
+            // ),
             Positioned(
-              //Khoang cach tu mep phai den Text
+              //Khoang cach tu mep phai den Text hien so ngay
               right: 10,
               child: Text(
                 new DateFormat("dd").format(_currentDateTime),
-                style: TextStyle(fontSize: 100, color: Color(0x10000000)),
+                style: TextStyle(fontSize: 80, color: Color(0x10000000)),
               ),
             ),
           ],
@@ -116,9 +119,11 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 35,
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.only(left: 10),
           child: Text(
-            "Wednesday",
+            //EEEE la format weekday
+            //https://api.flutter.dev/flutter/intl/DateFormat-class.html
+            new DateFormat("EEEEE").format(_currentDateTime),
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
@@ -126,9 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        //Nut Task
+        //Nut Task?Event
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top: 40, left: 10, right: 10),
           child: _button(context),
         ),
         //Tao duong phan chia Button va ListView

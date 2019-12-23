@@ -45,15 +45,17 @@ class _AddTaskState extends State<AddTask> {
                   style: TextStyle(
                     fontSize: 32,
                   ))),
-          CustomTextfield(
-            text: "Input a new task",
-            controller: _enteredText,
-          ),
           CustomDatetimePicker(
             onPressed: _pickDate,
             icon: Icons.date_range,
             str: new DateFormat("dd-MM-yyyy").format(pickedDate),
           ),
+          SizedBox(height: 30,),
+          CustomTextfield(
+            text: "Input a new task",
+            controller: _enteredText,
+          ),
+
           //CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
           CustomActionButton(
             onClose: () {

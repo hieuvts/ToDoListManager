@@ -388,7 +388,7 @@ abstract class _$Database extends GeneratedDatabase {
       {@Deprecated('No longer needed with Moor 1.6 - see the changelog for details')
           QueryEngine operateOn}) {
     return (operateOn ?? this).customSelect(
-        'SELECT * FROM todo WHERE todo_type = ? order by is_finish',
+        'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date',
         variables: [
           Variable.withInt(var1),
         ]).then((rows) => rows.map(_rowToTodoData).toList());
@@ -396,7 +396,7 @@ abstract class _$Database extends GeneratedDatabase {
 
   Stream<List<TodoData>> watchGetByType(int var1) {
     return customSelectStream(
-        'SELECT * FROM todo WHERE todo_type = ? order by is_finish',
+        'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date',
         variables: [
           Variable.withInt(var1),
         ],

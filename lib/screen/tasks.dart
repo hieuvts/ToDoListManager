@@ -51,9 +51,9 @@ class _TaskPageState extends State<TaskPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Confirm Task",
+                      Text("Complete Task?",
                           style: TextStyle(
-                              fontFamily: "PatrickHand", fontSize: 40)),
+                              fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
                         height: 30,
                       ),
@@ -115,9 +115,9 @@ class _TaskPageState extends State<TaskPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Delete Task",
+                      Text("Delete Task?",
                           style: TextStyle(
-                              fontFamily: "PatrickHand", fontSize: 40)),
+                              fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
                         height: 30,
                       ),
