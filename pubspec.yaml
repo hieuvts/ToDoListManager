@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   #sqflite: ^1.2.0
-  moor_flutter: ^2.0.0
+  moor_flutter: ^1.6.0  
   intl: ^0.16.0
   flutter_launcher_icons: ^0.7.4
   provider:

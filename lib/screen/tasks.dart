@@ -1,220 +1,169 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:todolistapp/custom_button.dart';
+import 'package:todolistapp/model/database.dart';
 
-class TaskScreen extends StatefulWidget {
+class TaskPage extends StatefulWidget {
   @override
-  _TaskScreenState createState() => _TaskScreenState();
+  _TaskPageState createState() => _TaskPageState();
 }
 
-class Task {
-  //Khai bao final de dung Const Constructor
-  final String taskName;
-  final bool isFinished;
-  const Task(this.taskName, this.isFinished);
-}
+class _TaskPageState extends State<TaskPage> {
+  Database provider;
 
-final List<Task> _taskList = [
-  new Task("Wake up early", false),
-  new Task("Take breakfast", false),
-  new Task("Go to schollllsadasdadas", false),
-  new Task("Do something!", false),
-  new Task("Go swimming", true),
-  new Task("Play game", true),
-  new Task("Go Go GOOO", true),
-];
-
-class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(0),
-      itemCount: _taskList.length,
-      itemBuilder: (context, index) {
-        return _taskList[index].isFinished
-            ? _taskCompletedList(_taskList[index])
-            : _taskUncompletedList(_taskList[index]);
-      },
+    provider = Provider.of<Database>(context);
+
+    return StreamProvider.value(
+      value: provider.getTodoByType(TodoType.TYPE_TASK.index),
+      child: Consumer<List<TodoData>>(
+        builder: (context, _dataList, child) {
+          return _dataList == null
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  padding: const EdgeInsets.all(0),
+                  itemCount: _dataList.length,
+                  itemBuilder: (context, index) {
+                    return _dataList[index].isFinish
+                        ? _taskComplete(_dataList[index])
+                        : _taskUncomplete(_dataList[index]);
+                  },
+                );
+        },
+      ),
     );
   }
 
-  Widget _taskUncompletedList(Task taskInfo) {
+  Widget _taskUncomplete(TodoData data) {
     return InkWell(
       onTap: () {
         showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Confirm",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: "PatrickHand",
-                    ),
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Confirm Task",
+                          style: TextStyle(
+                              fontFamily: "PatrickHand", fontSize: 40)),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text("Task: " + data.task, style: TextStyle(fontSize: 18)),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      Text("Time: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      CustomButton(
+                        buttonText: "Complete",
+                        onPressed: () {
+                          provider
+                              .completeTodoEntries(data.id)
+                              .whenComplete(() => Navigator.of(context).pop());
+                        },
+                        buttonColor: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    taskInfo.taskName,
-                    style: TextStyle(
-                      fontFamily: "helveticaneue",
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Time",
-                    style: TextStyle(
-                      fontFamily: "helveticaneue",
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  //Confirm button
-                  CustomButton(
-                    buttonText: "Confirm",
-                    textColor: Colors.white,
-                    buttonColor: Colors.redAccent,
-                    onPressed: () {
-                      //Confirm button
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-      onLongPress: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Delete this task?",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontFamily: "PatrickHand",
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Text(
-                    taskInfo.taskName,
-                    style: TextStyle(
-                      fontFamily: "helveticaneue",
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Time",
-                    style: TextStyle(
-                      fontFamily: "helveticaneue",
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  //Confirm button
-                  CustomButton(
-                    buttonText: "Delete!",
-                    textColor: Colors.white,
-                    buttonColor: Colors.redAccent,
-                    onPressed: () {
-                      //Confirm button
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        );
+                ),
+              );
+            });
       },
       child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: Color(0x20000000),
-                    blurRadius: 10,
-                    offset: Offset(1, 1),
-                  ),
-                ]),
-                child: Icon(
-                  Icons.radio_button_unchecked,
-                  color: Theme.of(context).accentColor,
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                taskInfo.taskName,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: "helveticaneue",
-                ),
-              ),
-            ],
-          )),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+        child: Row(
+          children: <Widget>[
+            Icon(
+              Icons.radio_button_unchecked,
+              color: Theme.of(context).accentColor,
+              size: 20,
+            ),
+            SizedBox(
+              width: 28,
+            ),
+            Text(data.task)
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _taskCompletedList(Task taskInfo) {
+  Widget _taskComplete(TodoData data) {
     return InkWell(
-      onTap: () {
-        
-      },
       onLongPress: () {
-        //Do something later
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Delete Task",
+                          style: TextStyle(
+                              fontFamily: "PatrickHand", fontSize: 40)),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text("Task: " +data.task, style: TextStyle(fontSize: 18),),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      Text("Time: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      CustomButton(
+                        buttonText: "Delete",
+                        onPressed: () {
+                          provider
+                              .deleteTodoEntries(data.id)
+                              .whenComplete(() => Navigator.of(context).pop());
+                        },
+                        buttonColor: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            });
       },
-      child: Padding(
-          padding: const EdgeInsets.all(12.0),
+      child: Container(
+        foregroundDecoration: BoxDecoration(color: Color(0x60FDFDFD)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
           child: Row(
             children: <Widget>[
-              Container(
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(80, 245, 91, 91),
-                    blurRadius: 10,
-                    offset: Offset(1, 1),
-                  ),
-                ]),
-                child: Icon(
-                  Icons.radio_button_checked,
-                  color: Theme.of(context).accentColor,
-                ),
+              Icon(
+                Icons.radio_button_checked,
+                color: Theme.of(context).accentColor,
+                size: 20,
               ),
               SizedBox(
-                width: 10,
+                width: 28,
               ),
-              Text(
-                taskInfo.taskName,
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: "helveticaneue",
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
+              Text(data.task)
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

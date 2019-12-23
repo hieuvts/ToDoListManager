@@ -1,0 +1,15 @@
+CREATE TABLE todo (
+    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    date DATETIME,
+    time DATETIME,
+    taskName TEXT NOT NULL,
+    taskDescription TEXT NOT NULL,
+    isFinish BOOLEAN NOT NULL,
+    todoType INT NOT NULL,
+);
+
+
+-- we can put named sql queries in here as well:
+createEntry: INSERT INTO todo (date, taskDescription) VALUES (:date, :taskDescription);
+deleteById: DELETE FROM todo WHERE id = :id;
+watchAllTodos: SELECT * FROM todo;

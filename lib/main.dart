@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todolistapp/custom_button.dart';
+import 'package:todolistapp/model/database.dart';
 import 'package:todolistapp/screen/add_event.dart';
 import 'package:todolistapp/screen/add_task.dart';
 import 'package:todolistapp/screen/events.dart';
@@ -14,34 +16,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ThemeChanger>(
-      builder: (_) => ThemeChanger(ThemeData(
-        primarySwatch: Colors.red,
-      )),
-      child: new MainApp_ThemeData_Changer(),
-    );
-  }
-}
-
-class MainApp_ThemeData_Changer extends StatelessWidget {
-  const MainApp_ThemeData_Changer({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Provider.of<ThemeChanger>(context);
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Database>(create: (_) => Database()),
+      ],
+      child: MaterialApp(
       title: 'Flutter Demo',
-      theme: theme.getTheme(),
-      // theme: ThemeData(
-      //   primarySwatch: Colors.red,
-      //   fontFamily: "OpenSansCondensed-Bold",
-      // ),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        fontFamily: "OpenSansCondensed-Bold",
+      ),
       home: MyHomePage(),
+    )
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -53,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //Do _pageController.page tra ve kieu double
   //Mac dinh luc chay app se hien thi TaskPage <=> 0
   double _currentPage = 0;
-
+  DateTime _currentDateTime = new DateTime.now();
   @override
   Widget build(BuildContext context) {
     _pageController.addListener(() {
@@ -74,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
               //Khoang cach tu mep phai den Text
               right: 10,
               child: Text(
-                "25",
+                new DateFormat("dd").format(_currentDateTime),
                 style: TextStyle(fontSize: 100, color: Color(0x10000000)),
               ),
             ),
@@ -152,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //Tao 1 pageview vuot trai/phai de chuyen Screen
           child: PageView(
             controller: _pageController,
-            children: <Widget>[TaskScreen(), EventScreen()],
+            children: <Widget>[TaskPage(), EventScreen()],
           ),
         )
       ],
