@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_button.dart';
+import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/model/database.dart';
+import 'package:todolistapp/screen/update_event.dart';
 
 class EventScreen extends StatefulWidget {
   @override
@@ -36,6 +37,17 @@ class _EventScreenState extends State<EventScreen> {
 
   Widget _eventUncomplete(TodoData data) {
     return InkWell(
+      onLongPress: () {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  child: UpdateEvent(),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))));
+            });
+      },
       onTap: () {
         showDialog(
           context: context,
@@ -47,20 +59,26 @@ class _EventScreenState extends State<EventScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Complete Event?",
+                      Text("Đã thực hiện?",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
                         height: 30,
                       ),
                       Text("Event: " + data.task,
-                          style: TextStyle(
-                              fontFamily: "PatrickHand", fontSize: 20)),
+                          style: TextStyle(fontSize: 20)),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      Text(
+                          "Thời gian: " +
+                              new DateFormat("dd-MM-yyyy").format(data.date),
+                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
                       CustomButton(
-                        buttonText: "Complete",
+                        buttonText: "Đã hoàn thành",
                         buttonColor: Colors.red,
                         textColor: Colors.white,
                         onPressed: () {
@@ -100,9 +118,9 @@ class _EventScreenState extends State<EventScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    "Time: " + new DateFormat("dd-MM-yyyy").format(data.date),
+                    "Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date),
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 13,
                     ),
                   ),
                 )),
@@ -173,20 +191,19 @@ class _EventScreenState extends State<EventScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Delete Event?",
+                      Text("Xoá sự kiện này?",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
                         height: 30,
                       ),
                       Text("Event: " + data.task,
-                          style: TextStyle(
-                              fontFamily: "PatrickHand", fontSize: 20)),
+                          style: TextStyle(fontSize: 20)),
                       SizedBox(
                         height: 24,
                       ),
                       CustomButton(
-                        buttonText: "Delete",
+                        buttonText: "Xoá?",
                         buttonColor: Colors.red,
                         textColor: Colors.white,
                         onPressed: () {
@@ -226,9 +243,9 @@ class _EventScreenState extends State<EventScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    "Time: " + new DateFormat("dd-MM-yyyy").format(data.date),
+                    "Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date),
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 13,
                     ),
                   ),
                 )),
@@ -283,18 +300,3 @@ class _EventScreenState extends State<EventScreen> {
     );
   }
 }
-
-class Event {
-  final String time;
-  final String task;
-  final String desc;
-  final bool isFinished;
-  const Event(this.time, this.task, this.desc, this.isFinished);
-}
-
-final List<Event> _eventList = [
-  new Event("8:00", "Go out", "Meet friends", true),
-  new Event("9:00", "Go back home", "Cooking", true),
-  new Event("13:00", "Get to school", "Study time", false),
-  new Event("17:00", "Go back home", "Take a shower", false),
-];

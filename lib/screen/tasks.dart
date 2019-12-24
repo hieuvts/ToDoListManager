@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_button.dart';
+import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/model/database.dart';
 
-class TaskPage extends StatefulWidget {
+class TaskScreen extends StatefulWidget {
   @override
-  _TaskPageState createState() => _TaskPageState();
+  _TaskScreenState createState() => _TaskScreenState();
 }
 
-class _TaskPageState extends State<TaskPage> {
+class _TaskScreenState extends State<TaskScreen> {
   Database provider;
 
   @override
@@ -51,7 +51,7 @@ class _TaskPageState extends State<TaskPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Complete Task?",
+                      Text("Đã thực hiện?",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
@@ -61,12 +61,12 @@ class _TaskPageState extends State<TaskPage> {
                       SizedBox(
                         height: 24,
                       ),
-                      Text("Time: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      Text("Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
                       CustomButton(
-                        buttonText: "Complete",
+                        buttonText: "Đã hoàn thành",
                         onPressed: () {
                           provider
                               .completeTodoEntries(data.id)
@@ -115,7 +115,7 @@ class _TaskPageState extends State<TaskPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Delete Task?",
+                      Text("Xoá nhiệm vụ?",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
@@ -125,12 +125,12 @@ class _TaskPageState extends State<TaskPage> {
                       SizedBox(
                         height: 24,
                       ),
-                      Text("Time: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      Text("Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
                       CustomButton(
-                        buttonText: "Delete",
+                        buttonText: "Xoá?",
                         onPressed: () {
                           provider
                               .deleteTodoEntries(data.id)

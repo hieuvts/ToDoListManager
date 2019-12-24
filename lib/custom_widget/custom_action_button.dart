@@ -17,13 +17,13 @@ class CustomActionButton extends StatelessWidget {
             children: <Widget>[
               CustomButton(
                 onPressed: onClose,
-                buttonText: "Cancel",
-                buttonColor: Colors.brown[100],
+                buttonText: "Huỷ",
+                buttonColor: Colors.brown[50],
               ),
 
               CustomButton(
                 onPressed: onSave,
-                buttonText: "Save",
+                buttonText: "Lưu",
                 buttonColor: Colors.red[300],
               )
             ],

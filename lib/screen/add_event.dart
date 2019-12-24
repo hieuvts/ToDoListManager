@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_action_button.dart';
-import 'package:todolistapp/custom_datetime_picker.dart';
-import 'package:todolistapp/custom_textfield.dart';
+import 'package:toast/toast.dart';
+import 'package:todolistapp/custom_widget/custom_action_button.dart';
+import 'package:todolistapp/custom_widget/custom_datetime_picker.dart';
+import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
 
-import '../custom_button.dart';
+import '../custom_widget/custom_button.dart';
 
 class AddEvent extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _AddEventState extends State<AddEvent> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Center(
-              child: Text("Add new event",
+              child: Text("Thêm sự kiện mới",
                   style: TextStyle(
                     fontSize: 32,
                   ))),
@@ -67,14 +68,14 @@ class _AddEventState extends State<AddEvent> {
             height: 30,
           ),
           CustomTextfield(
-            text: "Enter event title!",
+            text: "Tiêu đề",
             controller: _enteredTitle,
           ),
           SizedBox(
             height: 10,
           ),
           CustomTextfield(
-            text: "Enter event description",
+            text: "Nội dung",
             controller: _enteredDescription,
           ),
           SizedBox(
@@ -91,8 +92,8 @@ class _AddEventState extends State<AddEvent> {
               Navigator.of(context).pop();
             },
             onSave: () {
-//Xu li luu thong tin
-              if (_enteredTitle.text == "" && _enteredTitle.text == "") {
+              //Xu li luu thong tin
+              if (_enteredTitle.text == "") {
                 //In thong tin loi ra Terminal
                 print("No data");
               } else {
@@ -110,6 +111,8 @@ class _AddEventState extends State<AddEvent> {
                     .whenComplete(() => Navigator.of(context).pop());
 
                 print("Event data saved");
+                
+                Toast.show("Đã lưu!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
               }
             },
           ),

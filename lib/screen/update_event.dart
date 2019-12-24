@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/custom_widget/custom_action_button.dart';
+import 'package:todolistapp/custom_widget/custom_datetime_picker.dart';
 import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
-import 'package:toast/toast.dart';
-import '../custom_widget/custom_datetime_picker.dart';
 
-class AddTask extends StatefulWidget {
+import '../custom_widget/custom_button.dart';
+
+class UpdateEvent extends StatefulWidget {
   @override
-  _AddTaskState createState() => _AddTaskState();
+  _UpdateEventState createState() => _UpdateEventState();
 }
 
-class _AddTaskState extends State<AddTask> {
-  //String pickedDate = 'Pick a date';
-
-  final _enteredText = TextEditingController();
-
+class _UpdateEventState extends State<UpdateEvent> {
   DateTime pickedDate = new DateTime.now();
+  TimeOfDay pickedTime = new TimeOfDay.now();
+
+  final _enteredTitle = TextEditingController();
+  final _enteredDescription = TextEditingController();
+
   Future _pickDate() async {
     DateTime datepicker = await showDatePicker(
         context: context,
@@ -31,9 +32,21 @@ class _AddTaskState extends State<AddTask> {
       });
   }
 
+  Future _pickTime() async {
+    TimeOfDay timepicker = await showTimePicker(
+      context: context,
+      initialTime: new TimeOfDay.now(),
+    );
+    if (timepicker != null)
+      setState(() {
+        pickedTime = timepicker;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
-    _enteredText.clear();
+    _enteredDescription.clear();
+    _enteredTitle.clear();
     var provider = Provider.of<Database>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -41,7 +54,7 @@ class _AddTaskState extends State<AddTask> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Center(
-              child: Text("Thêm nhiệm vụ mới",
+              child: Text("Update event",
                   style: TextStyle(
                     fontSize: 32,
                   ))),
@@ -50,43 +63,48 @@ class _AddTaskState extends State<AddTask> {
             icon: Icons.date_range,
             str: new DateFormat("dd-MM-yyyy").format(pickedDate),
           ),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           CustomTextfield(
-            text: "Việc cần làm",
-            controller: _enteredText,
+            text: "Enter event title!",
+            controller: _enteredTitle,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          CustomTextfield(
+            text: "Enter event description",
+            controller: _enteredDescription,
+          ),
+          SizedBox(
+            height: 10,
           ),
 
-          //CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
+          // CustomDatetimePicker(
+          //   onPressed: _pickTime,
+          //   icon: Icons.access_time,
+          //   str: TimeOfDay.now().toString(),
+          // ),
           CustomActionButton(
             onClose: () {
-              //Khi nhan nut close thi dong Widget
               Navigator.of(context).pop();
             },
             onSave: () {
-              //Xu li luu thong tin
-              if (_enteredText.text == "") {
+//Xu li luu thong tin
+              if (_enteredTitle.text == "" && _enteredTitle.text == "") {
                 //In thong tin loi ra Terminal
                 print("No data");
               } else {
                 provider
-                    .insertTodoEntries(new TodoData(
-                      id: null,
-                      date: pickedDate,
-                      task: _enteredText.text,
-                      time: DateTime.now(),
-                      //Mac dinh khi khoi tao Task chua duoc hoan thanh
-                      isFinish: false,
-                      //Mục này sử dụng cho event
-                      description: "",
-                      todoType: TodoType.TYPE_TASK.index,
-                    ))
+                    .updateTodoEntries(
+                        _enteredTitle.text, _enteredDescription.text, 1)
                     .whenComplete(() => Navigator.of(context).pop());
 
-                print("Task data saved");
-                Toast.show("Đã lưu!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                print("Event data updated");
               }
             },
-          )
+          ),
         ],
       ),
     );

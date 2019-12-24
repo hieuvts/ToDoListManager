@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_button.dart';
+import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/model/database.dart';
 import 'package:todolistapp/screen/add_event.dart';
 import 'package:todolistapp/screen/add_task.dart';
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
           },
           child: Icon(Icons.add),
-          tooltip: "Add",
+          tooltip: "Thêm mới",
           backgroundColor: Colors.red[600],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -98,10 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //Chen space vao giua cac button
             children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {},
-              ),
               IconButton(
                 icon: Icon(Icons.more_vert),
                 onPressed: () {},
@@ -134,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //Nut Task?Event
         Padding(
           padding: const EdgeInsets.only(top: 40, left: 10, right: 10),
+          //Extract widget ra ngoài
           child: _button(context),
         ),
         //Tao duong phan chia Button va ListView
@@ -147,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //Tao 1 pageview vuot trai/phai de chuyen Screen
           child: PageView(
             controller: _pageController,
-            children: <Widget>[TaskPage(), EventScreen()],
+            children: <Widget>[TaskScreen(), EventScreen()],
           ),
         )
       ],

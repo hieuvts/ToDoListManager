@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:moor_flutter/moor_flutter.dart';
 part 'database.g.dart';
 
-
 class Todo extends Table {
   IntColumn get id => integer().autoIncrement()();
   DateTimeColumn get date => dateTime()();
@@ -12,22 +11,24 @@ class Todo extends Table {
   BoolColumn get isFinish => boolean()();
   IntColumn get todoType => integer()();
 }
+
 enum TodoType { TYPE_TASK, TYPE_EVENT }
 
 @UseMoor(tables: [
   Todo
 ], queries: {
   '_getByType':
-      'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date',
+      'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date, time',
   '_completeTask': 'UPDATE todo SET is_finish = 1 WHERE id = ?',
-  '_deleteTask': 'DELETE FROM todo WHERE id = ?'
+  '_deleteTask': 'DELETE FROM todo WHERE id = ?',
+  '_updateTask':
+      'UPDATE todo SET task = ?, description = ? WHERE id = ?',
 })
-
-
-class Database extends _$Database with ChangeNotifier{
+class Database extends _$Database with ChangeNotifier {
   // we tell the database where to store the data with this constructor
   Database()
-      : super(FlutterQueryExecutor.inDatabaseFolder(path: 'todos_file.sqlite', logStatements: true));
+      : super(FlutterQueryExecutor.inDatabaseFolder(
+            path: 'todos_file.sqlite', logStatements: true));
   @override
   int get schemaVersion => 1;
   Stream<List<TodoData>> getTodoByType(int type) => watchGetByType(type);
@@ -47,6 +48,12 @@ class Database extends _$Database with ChangeNotifier{
   Future deleteTodoEntries(int id) {
     return transaction((tx) async {
       await _deleteTask(id, operateOn: tx);
+    });
+  }
+
+  Future updateTodoEntries(String task, String description, int id) {
+    return transaction((tx) async {
+      await _updateTask(task, description, id);
     });
   }
 }
