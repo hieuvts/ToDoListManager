@@ -59,7 +59,7 @@ class _EventScreenState extends State<EventScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Đã thực hiện?",
+                      Text("Đã hoàn thành?",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(

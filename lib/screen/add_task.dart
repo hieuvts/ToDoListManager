@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/custom_widget/custom_action_button.dart';
 import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
@@ -55,7 +54,7 @@ class _AddTaskState extends State<AddTask> {
             text: "Việc cần làm",
             controller: _enteredText,
           ),
-
+SizedBox(height: 10,),
           //CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
           CustomActionButton(
             onClose: () {

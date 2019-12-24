@@ -8,7 +8,6 @@ import 'package:todolistapp/screen/add_task.dart';
 import 'package:todolistapp/screen/events.dart';
 import 'package:todolistapp/screen/tasks.dart';
 
-import 'blocs/theme_change.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,11 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     });
     return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: Size.fromHeight(30.0), //Chieu cao cua AppBar
-            child: AppBar(
-              title: new Text("Tasks and Events manager"),
-            )),
+        // appBar: PreferredSize(
+        //     preferredSize: Size.fromHeight(30.0), //Chieu cao cua AppBar
+        //     child: AppBar(
+        //       title: new Text("Tasks and Events manager"),
+        //     )),
         body: Stack(
           children: <Widget>[
             _mainContent(context),
@@ -68,7 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
               right: 10,
               child: Text(
                 new DateFormat("dd").format(_currentDateTime),
-                style: TextStyle(fontSize: 80, color: Color(0x10000000)),
+                style: TextStyle(fontSize: 90, color: Colors.grey[700]),
+                //Color(0x10000000)
               ),
             ),
           ],

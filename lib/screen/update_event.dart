@@ -6,7 +6,6 @@ import 'package:todolistapp/custom_widget/custom_datetime_picker.dart';
 import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
 
-import '../custom_widget/custom_button.dart';
 
 class UpdateEvent extends StatefulWidget {
   @override
