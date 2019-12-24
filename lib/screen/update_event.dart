@@ -6,7 +6,6 @@ import 'package:todolistapp/custom_widget/custom_datetime_picker.dart';
 import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
 
-
 class UpdateEvent extends StatefulWidget {
   @override
   _UpdateEventState createState() => _UpdateEventState();
@@ -53,7 +52,7 @@ class _UpdateEventState extends State<UpdateEvent> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Center(
-              child: Text("Update event",
+              child: Text("Cập nhật sự kiện",
                   style: TextStyle(
                     fontSize: 32,
                   ))),
@@ -66,14 +65,14 @@ class _UpdateEventState extends State<UpdateEvent> {
             height: 30,
           ),
           CustomTextfield(
-            text: "Enter event title!",
+            text: "Tiêu đề",
             controller: _enteredTitle,
           ),
           SizedBox(
             height: 10,
           ),
           CustomTextfield(
-            text: "Enter event description",
+            text: "Nội dung",
             controller: _enteredDescription,
           ),
           SizedBox(
@@ -97,7 +96,7 @@ class _UpdateEventState extends State<UpdateEvent> {
               } else {
                 provider
                     .updateTodoEntries(
-                        _enteredTitle.text, _enteredDescription.text, 1)
+                        _enteredTitle.text, _enteredDescription.text, 0)
                     .whenComplete(() => Navigator.of(context).pop());
 
                 print("Event data updated");

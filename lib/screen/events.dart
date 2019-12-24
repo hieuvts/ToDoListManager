@@ -118,7 +118,8 @@ class _EventScreenState extends State<EventScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    "Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date),
+                    "Thời gian: " +
+                        new DateFormat("dd-MM-yyyy").format(data.date),
                     style: TextStyle(
                       fontSize: 13,
                     ),
@@ -243,7 +244,8 @@ class _EventScreenState extends State<EventScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Text(
-                    "Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date),
+                    "Thời gian: " +
+                        new DateFormat("dd-MM-yyyy").format(data.date),
                     style: TextStyle(
                       fontSize: 13,
                     ),

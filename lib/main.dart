@@ -7,7 +7,7 @@ import 'package:todolistapp/screen/add_event.dart';
 import 'package:todolistapp/screen/add_task.dart';
 import 'package:todolistapp/screen/events.dart';
 import 'package:todolistapp/screen/tasks.dart';
-
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //Ẩn thanh status bar
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     return MultiProvider(
         providers: [
           ChangeNotifierProvider<Database>(create: (_) => Database()),

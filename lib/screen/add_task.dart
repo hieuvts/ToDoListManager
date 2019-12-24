@@ -17,19 +17,6 @@ class _AddTaskState extends State<AddTask> {
 
   final _enteredText = TextEditingController();
 
-  DateTime pickedDate = new DateTime.now();
-  Future _pickDate() async {
-    DateTime datepicker = await showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime.now().add(Duration(days: -365)),
-        lastDate: new DateTime.now().add(Duration(days: 365)));
-    if (datepicker != null)
-      setState(() {
-        pickedDate = datepicker;
-      });
-  }
-
   @override
   Widget build(BuildContext context) {
     _enteredText.clear();
@@ -44,17 +31,16 @@ class _AddTaskState extends State<AddTask> {
                   style: TextStyle(
                     fontSize: 32,
                   ))),
-          CustomDatetimePicker(
-            onPressed: _pickDate,
-            icon: Icons.date_range,
-            str: new DateFormat("dd-MM-yyyy").format(pickedDate),
+          SizedBox(
+            height: 30,
           ),
-          SizedBox(height: 30,),
           CustomTextfield(
             text: "Việc cần làm",
             controller: _enteredText,
           ),
-SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           //CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
           CustomActionButton(
             onClose: () {
@@ -70,19 +56,20 @@ SizedBox(height: 10,),
                 provider
                     .insertTodoEntries(new TodoData(
                       id: null,
-                      date: pickedDate,
-                      task: _enteredText.text,
+                      date: DateTime.now(),
+                      task: "",
                       time: DateTime.now(),
                       //Mac dinh khi khoi tao Task chua duoc hoan thanh
                       isFinish: false,
                       //Mục này sử dụng cho event
-                      description: "",
+                      description: _enteredText.text,
                       todoType: TodoType.TYPE_TASK.index,
                     ))
                     .whenComplete(() => Navigator.of(context).pop());
 
                 print("Task data saved");
-                Toast.show("Đã lưu!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+                Toast.show("Đã lưu!", context,
+                    duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
               }
             },
           )

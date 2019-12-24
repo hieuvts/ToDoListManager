@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todolistapp/custom_widget/custom_button.dart';
+import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
 
 class TaskScreen extends StatefulWidget {
@@ -11,6 +12,7 @@ class TaskScreen extends StatefulWidget {
 
 class _TaskScreenState extends State<TaskScreen> {
   Database provider;
+  final _enteredText = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,51 @@ class _TaskScreenState extends State<TaskScreen> {
 
   Widget _taskUncomplete(TodoData data) {
     return InkWell(
+      onLongPress: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Cập nhật nhiệm vụ",
+                          style: TextStyle(
+                              fontFamily: "helveticaneue", fontSize: 30)),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      CustomTextfield(
+                        text: "Nhập thông tin mới",
+                        controller: _enteredText,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      CustomButton(
+                        buttonText: "Đã hoàn thành",
+                        onPressed: () {
+                          provider
+                              .updateTodoEntries(_enteredText.text, "", data.id)
+                              .whenComplete(() => Navigator.of(context).pop());
+                        },
+                        buttonColor: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            });
+      },
       onTap: () {
         showDialog(
             context: context,
@@ -57,11 +104,15 @@ class _TaskScreenState extends State<TaskScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      Text("Task: " + data.task, style: TextStyle(fontSize: 18)),
+                      Text("Task: " + data.description,
+                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
-                      Text("Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      Text(
+                          "Thời gian: " +
+                              new DateFormat("dd-MM-yyyy").format(data.date),
+                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
@@ -93,7 +144,7 @@ class _TaskScreenState extends State<TaskScreen> {
             SizedBox(
               width: 28,
             ),
-            Text(data.task)
+            Text(data.description)
           ],
         ),
       ),
@@ -121,11 +172,17 @@ class _TaskScreenState extends State<TaskScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      Text("Task: " +data.task, style: TextStyle(fontSize: 18),),
+                      Text(
+                        "Task: " + data.description,
+                        style: TextStyle(fontSize: 18),
+                      ),
                       SizedBox(
                         height: 24,
                       ),
-                      Text("Thời gian: " + new DateFormat("dd-MM-yyyy").format(data.date), style: TextStyle(fontSize: 18)),
+                      Text(
+                          "Thời gian: " +
+                              new DateFormat("dd-MM-yyyy").format(data.date),
+                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
@@ -159,7 +216,7 @@ class _TaskScreenState extends State<TaskScreen> {
               SizedBox(
                 width: 28,
               ),
-              Text(data.task)
+              Text(data.description)
             ],
           ),
         ),
