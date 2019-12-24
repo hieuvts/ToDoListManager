@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
+import 'package:todolistapp/custom_widget/custom_action_button.dart';
 import 'package:todolistapp/custom_widget/custom_button.dart';
 import 'package:todolistapp/custom_widget/custom_textfield.dart';
 import 'package:todolistapp/model/database.dart';
@@ -39,6 +41,7 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   Widget _taskUncomplete(TodoData data) {
+    _enteredText.clear();
     return InkWell(
       onLongPress: () {
         showDialog(
@@ -53,7 +56,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Cập nhật nhiệm vụ",
+                      Text("Cập nhật thông tin",
                           style: TextStyle(
                               fontFamily: "helveticaneue", fontSize: 30)),
                       SizedBox(
@@ -69,16 +72,30 @@ class _TaskScreenState extends State<TaskScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      CustomButton(
-                        buttonText: "Đã hoàn thành",
-                        onPressed: () {
-                          provider
-                              .updateTodoEntries(_enteredText.text, "", data.id)
-                              .whenComplete(() => Navigator.of(context).pop());
+                      CustomActionButton(
+                        onClose: () {
+                          Navigator.of(context).pop();
                         },
-                        buttonColor: Theme.of(context).accentColor,
-                        textColor: Colors.white,
-                      )
+                        onSave: () {
+                          //Xu li luu thong tin
+                          if (_enteredText.text == "") {
+                            //In thong tin loi ra Terminal
+                            print("No data");
+                          } else {
+                            provider
+                                .updateTodoEntries(
+                                    "", _enteredText.text, data.id)
+                                .whenComplete(
+                                    () => Navigator.of(context).pop());
+
+                            print("Event data saved");
+
+                            Toast.show("Đã cập nhật!", context,
+                                duration: Toast.LENGTH_SHORT,
+                                gravity: Toast.BOTTOM);
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -96,7 +113,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text("Đã hoàn thành?",
                           style: TextStyle(
@@ -117,6 +134,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         height: 24,
                       ),
                       CustomButton(
+                        
                         buttonText: "Đã hoàn thành",
                         onPressed: () {
                           provider
@@ -164,7 +182,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text("Xoá nhiệm vụ?",
                           style: TextStyle(

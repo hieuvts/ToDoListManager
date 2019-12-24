@@ -41,13 +41,13 @@ class Database extends _$Database with ChangeNotifier {
 
   Future completeTodoEntries(int id) {
     return transaction((tx) async {
-      await _completeTask(id, operateOn: tx);
+      await _completeTask(id);
     });
   }
 
   Future deleteTodoEntries(int id) {
     return transaction((tx) async {
-      await _deleteTask(id, operateOn: tx);
+      await _deleteTask(id);
     });
   }
 

@@ -57,7 +57,7 @@ class _EventScreenState extends State<EventScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text("Đã hoàn thành?",
                           style: TextStyle(
@@ -147,7 +147,7 @@ class _EventScreenState extends State<EventScreen> {
                         ),
                       ]),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       //Text hien thi Tieu de cua Event - Event Title
                       Text(
@@ -190,7 +190,7 @@ class _EventScreenState extends State<EventScreen> {
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       Text("Xoá sự kiện này?",
                           style: TextStyle(
@@ -273,7 +273,7 @@ class _EventScreenState extends State<EventScreen> {
                         ),
                       ]),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
                       //Text hien thi Tieu de cua Event - Event Title
                       Text(
