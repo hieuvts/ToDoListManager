@@ -66,7 +66,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         height: 30,
                       ),
                       CustomTextfield(
-                        text: "Nhập thông tin mới",
+                        text: "Nhập nội dung mới",
                         controller: _enteredText,
                       ),
                       SizedBox(
@@ -88,7 +88,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                 .whenComplete(
                                     () => Navigator.of(context).pop());
 
-                            print("Event data saved");
+                            print("Task updated");
 
                             Toast.show("Đã cập nhật!", context,
                                 duration: Toast.LENGTH_SHORT,
@@ -134,7 +134,6 @@ class _TaskScreenState extends State<TaskScreen> {
                         height: 24,
                       ),
                       CustomButton(
-                        
                         buttonText: "Đã hoàn thành",
                         onPressed: () {
                           provider
@@ -234,7 +233,12 @@ class _TaskScreenState extends State<TaskScreen> {
               SizedBox(
                 width: 28,
               ),
-              Text(data.description)
+              Text(
+                data.description,
+                style: TextStyle(
+                  decoration: TextDecoration.lineThrough,
+                ),
+              )
             ],
           ),
         ),

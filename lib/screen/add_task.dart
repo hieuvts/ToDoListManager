@@ -13,8 +13,6 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  //String pickedDate = 'Pick a date';
-
   final _enteredText = TextEditingController();
 
   @override
@@ -41,7 +39,6 @@ class _AddTaskState extends State<AddTask> {
           SizedBox(
             height: 10,
           ),
-          //CustomDatetimePicker(onPressed: _pickTime, icon: Icons.access_time, str: pickedTime,),
           CustomActionButton(
             onClose: () {
               //Khi nhan nut close thi dong Widget

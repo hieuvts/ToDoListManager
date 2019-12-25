@@ -70,7 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text(
                 new DateFormat("dd").format(_currentDateTime),
                 style: TextStyle(fontSize: 90, color: Colors.grey[700]),
-                //Color(0x10000000)
               ),
             ),
           ],
@@ -78,7 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             showDialog(
-                //Chi duoc dung nut BACK de thoat Dialog
                 barrierDismissible: false,
                 context: context,
                 builder: (BuildContext context) {
@@ -93,8 +91,6 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.red[600],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-
-        //Float Action Button Phia tren thanh bottomNaviBar
         bottomNavigationBar: BottomAppBar(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +98,24 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.more_vert),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "To-do List\nVersion 1.0.0",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))));
+                      });
+                },
               ),
             ],
           ),
@@ -119,7 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: Text(
-            //EEEE la format weekday
             //https://api.flutter.dev/flutter/intl/DateFormat-class.html
             new DateFormat("EEEEE").format(_currentDateTime),
             style: TextStyle(

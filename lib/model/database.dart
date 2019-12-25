@@ -18,7 +18,7 @@ enum TodoType { TYPE_TASK, TYPE_EVENT }
   Todo
 ], queries: {
   '_getByType':
-      'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date, time',
+      'SELECT * FROM todo WHERE todo_type = ? order by is_finish, date DESC, time DESC',
   '_completeTask': 'UPDATE todo SET is_finish = 1 WHERE id = ?',
   '_deleteTask': 'DELETE FROM todo WHERE id = ?',
   '_updateTask':

@@ -31,16 +31,16 @@ class _AddEventState extends State<AddEvent> {
       });
   }
 
-  Future _pickTime() async {
-    TimeOfDay timepicker = await showTimePicker(
-      context: context,
-      initialTime: new TimeOfDay.now(),
-    );
-    if (timepicker != null)
-      setState(() {
-        pickedTime = timepicker;
-      });
-  }
+  // Future _pickTime() async {
+  //   TimeOfDay timepicker = await showTimePicker(
+  //     context: context,
+  //     initialTime: new TimeOfDay.now(),
+  //   );
+  //   if (timepicker != null)
+  //     setState(() {
+  //       pickedTime = timepicker;
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
