@@ -11,7 +11,7 @@
 ## Ảnh minh hoạ
  //
 	![alt text](https://raw.githubusercontent.com/hieuvts/images/master/task_scr.jpg)
-	![alt text](https://raw.githubusercontent.com/hieuvts/images/master/task_scr.jpg)
+	![alt text](https://raw.githubusercontent.com/hieuvts/images/master/event_scr.jpg)
 ## File cài đặt
 //
 	[Download](https://drive.google.com/a/gm.uit.edu.vn/uc?id=15KvIhIgDboyGurvOZV9xQfCiU0UZc3WA&export=download)
