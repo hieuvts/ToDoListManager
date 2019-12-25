@@ -126,10 +126,6 @@ class _TaskScreenState extends State<TaskScreen> {
                       SizedBox(
                         height: 24,
                       ),
-                      Text(
-                          "Thời gian: " +
-                              new DateFormat("dd-MM-yyyy").format(data.date),
-                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
@@ -196,10 +192,6 @@ class _TaskScreenState extends State<TaskScreen> {
                       SizedBox(
                         height: 24,
                       ),
-                      Text(
-                          "Thời gian: " +
-                              new DateFormat("dd-MM-yyyy").format(data.date),
-                          style: TextStyle(fontSize: 18)),
                       SizedBox(
                         height: 24,
                       ),
